@@ -47,7 +47,7 @@ public:
   void begin();
   void stop();
 private:
-
-}
+  bool _configured;
+};
 
 #endif // __STM32_LOW_POWER_H

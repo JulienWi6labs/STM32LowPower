@@ -50,5 +50,5 @@ void STM32LowPower::begin()
 
 void STM32LowPower::stop()
 {
-
+  LowPower_stop();
 }
