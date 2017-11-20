@@ -52,3 +52,13 @@ void STM32LowPower::stop()
 {
   LowPower_stop();
 }
+
+void STM32LowPower::shutdown()
+{
+  LowPower_shutdown();
+}
+
+void STM32LowPower::all_gpio_analog()
+{
+  LowPower_all_gpio_analog();
+}
