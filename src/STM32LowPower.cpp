@@ -45,12 +45,18 @@ STM32LowPower::STM32LowPower(void)
 
 void STM32LowPower::begin()
 {
+  LowPower_init();
   _configured = true;
 }
 
 void STM32LowPower::stop()
 {
   LowPower_stop();
+}
+
+void STM32LowPower::standby()
+{
+  LowPower_standby();
 }
 
 void STM32LowPower::shutdown()

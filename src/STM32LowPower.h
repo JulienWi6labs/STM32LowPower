@@ -46,6 +46,7 @@ public:
   STM32LowPower();
   void begin();
   void stop();
+  void standby();
   void shutdown();
   void all_gpio_analog();
 private:
