@@ -49,6 +49,11 @@ void STM32LowPower::begin()
   _configured = true;
 }
 
+void STM32LowPower::sleep()
+{
+  LowPower_sleep();
+}
+
 void STM32LowPower::stop()
 {
   LowPower_stop();

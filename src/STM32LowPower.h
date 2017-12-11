@@ -45,6 +45,7 @@ class STM32LowPower {
 public:
   STM32LowPower();
   void begin();
+  void sleep();
   void stop();
   void standby();
   void shutdown();
