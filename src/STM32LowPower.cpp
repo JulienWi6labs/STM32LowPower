@@ -42,17 +42,18 @@ STM32LowPower LowPower;
 
 STM32LowPower::STM32LowPower()
 {
-
+  _configured = false;
 }
 
 void STM32LowPower::begin(void)
 {
-
+  LowPower_init();
+  _configured = true;
 }
 
 void STM32LowPower::idle(void)
 {
-  idle(0);
+  LowPower_sleep();
 }
 
 void STM32LowPower::idle(uint32_t millis)
@@ -60,11 +61,12 @@ void STM32LowPower::idle(uint32_t millis)
   if(millis > 0) {
     //Enable RTC
   }
+  LowPower_sleep();
 }
 
 void STM32LowPower::sleep(void)
 {
-  sleep(0);
+  LowPower_stop();
 }
 
 void STM32LowPower::sleep(uint32_t millis)
@@ -72,11 +74,12 @@ void STM32LowPower::sleep(uint32_t millis)
   if(millis > 0) {
     //Enable RTC
   }
+  LowPower_stop();
 }
 
 void STM32LowPower::deepSleep(void)
 {
-  deepSleep(0);
+  LowPower_standby();
 }
 
 void STM32LowPower::deepSleep(uint32_t millis)
@@ -84,11 +87,12 @@ void STM32LowPower::deepSleep(uint32_t millis)
   if(millis > 0) {
     //Enable RTC
   }
+  LowPower_standby();
 }
 
 void STM32LowPower::shutdown(void)
 {
-  shutdown(0);
+  LowPower_shutdown();
 }
 
 void STM32LowPower::shutdown(uint32_t millis)
@@ -96,10 +100,13 @@ void STM32LowPower::shutdown(uint32_t millis)
   if(millis > 0) {
     //Enable RTC
   }
+  LowPower_shutdown();
 }
 
 void STM32LowPower::attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, uint32_t mode)
 {
+  // all GPIO for idle (smt32 sleep) and sleep (stm32 stop)
+  attachInterrupt(pin, callback, mode);
   //How enable the WakeUp pins???? Should we
 }
 

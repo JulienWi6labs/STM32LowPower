@@ -93,7 +93,7 @@ public:
   //void enableWakeupFrom(wakeup_reason peripheral, uint32_t pin = 0xFF, uint32_t event = 0xFF, uint32_t option = 0xFF);
 
 private:
-
+  bool _configured;
 };
 
 extern STM32LowPower LowPower;
