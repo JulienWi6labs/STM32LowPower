@@ -40,6 +40,7 @@
 
 STM32LowPower LowPower;
 
+
 STM32LowPower::STM32LowPower()
 {
   _configured = false;
@@ -56,11 +57,33 @@ void STM32LowPower::idle(void)
   LowPower_sleep();
 }
 
+void STM32LowPower::programRtcWakeUp(uint32_t millis)
+{
+  int epoc;
+  uint32_t sec;
+
+  if(millis > 0) {
+    if (!rtcLowPower.isConfigured()){
+      //Enable RTC
+      rtcLowPower.begin(HOUR_24);
+    }
+    
+    // convert millisecond to second
+    sec = millis / 1000;
+    // Minimum is 1 second
+    if (sec == 0){
+      sec = 1;
+    }
+
+    epoc = rtcLowPower.getEpoch();
+    rtcLowPower.setAlarmEpoch( epoc + sec );
+  }
+
+}
+
 void STM32LowPower::idle(uint32_t millis)
 {
-  if(millis > 0) {
-    //Enable RTC
-  }
+  programRtcWakeUp(millis);
   LowPower_sleep();
 }
 
@@ -71,8 +94,9 @@ void STM32LowPower::sleep(void)
 
 void STM32LowPower::sleep(uint32_t millis)
 {
+
+
   if(millis > 0) {
-    //Enable RTC
   }
   LowPower_stop();
 }
@@ -107,7 +131,9 @@ void STM32LowPower::attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, ui
 {
   // all GPIO for idle (smt32 sleep) and sleep (stm32 stop)
   attachInterrupt(pin, callback, mode);
-  //How enable the WakeUp pins???? Should we
+
+  // If Gpio is a Wake up pin activate it for deepSleep (standby stm32) and shutdown
+  LowPower_EnableWakeUpPin(pin);
 }
 
 void STM32LowPower::enableWakeupFrom(HardwareSerial *serial, voidFuncPtr callback)

@@ -94,6 +94,8 @@ public:
 
 private:
   bool _configured;
+  STM32RTC rtcLowPower;
+  void programRtcWakeUp(uint32_t millis);
 };
 
 extern STM32LowPower LowPower;
