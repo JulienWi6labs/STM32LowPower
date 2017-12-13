@@ -94,10 +94,7 @@ void STM32LowPower::sleep(void)
 
 void STM32LowPower::sleep(uint32_t millis)
 {
-
-
-  if(millis > 0) {
-  }
+  programRtcWakeUp(millis);
   LowPower_stop();
 }
 
@@ -108,9 +105,7 @@ void STM32LowPower::deepSleep(void)
 
 void STM32LowPower::deepSleep(uint32_t millis)
 {
-  if(millis > 0) {
-    //Enable RTC
-  }
+  programRtcWakeUp(millis);
   LowPower_standby();
 }
 
@@ -121,9 +116,7 @@ void STM32LowPower::shutdown(void)
 
 void STM32LowPower::shutdown(uint32_t millis)
 {
-  if(millis > 0) {
-    //Enable RTC
-  }
+  programRtcWakeUp(millis);
   LowPower_shutdown();
 }
 
@@ -133,7 +126,7 @@ void STM32LowPower::attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, ui
   attachInterrupt(pin, callback, mode);
 
   // If Gpio is a Wake up pin activate it for deepSleep (standby stm32) and shutdown
-  LowPower_EnableWakeUpPin(pin);
+  LowPower_EnableWakeUpPin(pin, mode);
 }
 
 void STM32LowPower::enableWakeupFrom(HardwareSerial *serial, voidFuncPtr callback)
@@ -148,5 +141,5 @@ void STM32LowPower::enableWakeupFrom(TwoWire *wire, voidFuncPtr callback)
 
 void STM32LowPower::enableWakeupFrom(STM32RTC *rtc, voidFuncPtr callback)
 {
-  //Is this function is really usefull? I not sure...
+  rtc->attachInterrupt(callback);
 }
