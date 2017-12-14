@@ -48,7 +48,7 @@ STM32LowPower::STM32LowPower()
 
 void STM32LowPower::begin(void)
 {
-  LowPower_init();
+//  LowPower_init();
   _configured = true;
 }
 
@@ -131,7 +131,7 @@ void STM32LowPower::attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, ui
 
 void STM32LowPower::enableWakeupFrom(HardwareSerial *serial, voidFuncPtr callback)
 {
-
+  LowPower_EnableWakeUpUart(serial->getSerialPointer(), callback);
 }
 
 void STM32LowPower::enableWakeupFrom(TwoWire *wire, voidFuncPtr callback)
