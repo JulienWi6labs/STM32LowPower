@@ -48,7 +48,7 @@ STM32LowPower::STM32LowPower()
 
 void STM32LowPower::begin(void)
 {
-//  LowPower_init();
+  LowPower_init();
   _configured = true;
 }
 
